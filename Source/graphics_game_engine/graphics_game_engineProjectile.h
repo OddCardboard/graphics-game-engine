@@ -8,6 +8,8 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UProjectileMovementComponent;
+class UMaterialInterface;
 
 UCLASS(config=Game)
 class Agraphics_game_engineProjectile : public AActor
@@ -21,6 +23,26 @@ class Agraphics_game_engineProjectile : public AActor
 	/** Projectile movement component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* ballMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Material, meta = (AllowPrivateAccess = "true"))
+		UMaterialInterface* baseMat;
+
+
+
+
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, Category = "Projectile Material")
+	UMaterialInterface* projMat;
+
+	UPROPERTY(Transient)
+	UMaterialInstanceDynamic* dmiMat;
+
+	FLinearColor randColor;
 
 public:
 	Agraphics_game_engineProjectile();
