@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Components/SphereComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 Agraphics_game_engineProjectile::Agraphics_game_engineProjectile() 
 {
@@ -110,6 +112,31 @@ void Agraphics_game_engineProjectile::OnHit(
 
 		if (IsValid(MatInstance))
 		{
+
+			if (IsValid(colorP))
+			{
+				UNiagaraComponent* particleComp =
+					UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+						GetWorld(),
+						colorP,
+						Hit.ImpactPoint + (Hit.ImpactNormal * 5.0f),
+						Hit.ImpactNormal.Rotation(),
+						FVector(1.0f),
+						true,   // Auto destroy
+						false   // Do not activate yet
+					);
+
+				if (IsValid(particleComp))
+				{
+					particleComp->SetVariableLinearColor(
+						FName(TEXT("User.RandomColor")),
+						randColor
+					);
+
+					particleComp->Activate(true);
+				}
+			}
+
 			MatInstance->SetVectorParameterValue(
 				TEXT("Color"),
 				randColor

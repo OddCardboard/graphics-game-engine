@@ -10,6 +10,7 @@ class USphereComponent;
 class UProjectileMovementComponent;
 class UProjectileMovementComponent;
 class UMaterialInterface;
+class UNiagaraSystem;
 
 UCLASS(config=Game)
 class Agraphics_game_engineProjectile : public AActor
@@ -29,6 +30,9 @@ class Agraphics_game_engineProjectile : public AActor
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Material, meta = (AllowPrivateAccess = "true"))
 		UMaterialInterface* baseMat;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* colorP;
 
 
 
